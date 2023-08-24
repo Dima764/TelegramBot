@@ -1,5 +1,7 @@
 import telebot
+from background import keep_alive
 from telebot import types
+
 
 # Створення екземпляру бота з токеном доступу
 bot = telebot.TeleBot('6310883087:AAHsjJsUtSL10SNvfoAAPacCPtFhLJuG_XM')
@@ -17,7 +19,9 @@ list_1 = [
             "Після цього проблема має піти з усіма профілями\n\n" +
             "Для MacOS:\n" +
             "Закрий долфін\n" +
-            "Знайди папку dolphin_anty (через Application Support)\n" +
+            "Знайди папку dolphin_anty\n" +
+            "(відкрий Finder натисни cmd+Shift+G далі введи:\n"         
+            "~/Library/Application Support/dolphin_anty)\n" +
             "Перейменуй її на __dolphin_anty\n" +
             "Запусти Долфін"},
     {'question': 'Дуже багато спроб вводу Captcha y Dolphin', 'answer': "Спробуйте зайти ще раз використовуючи Vpn.\n" +
@@ -27,6 +31,8 @@ list_1 = [
     {'question': 'Викинуло на сторінку введення логіна i пароля (OF)', 'answer': 'Ця проблема не може бути вирішена оператором. Закрийте повністю Dolphin та зверніться до @CA_dima .'},
     {'question': 'Не заходить у профіль (Error: Помилка перевірки з’єднання з проксі)', 'answer': 'Дана проблема пов’язана з тимчасовими проблемами проксі сервера, зверніться будь ласка до @CA_dima .'},
     {'question': 'Не відкривається Dolphin (проблема з локальним API)', 'answer': 'Спочатку перезапустіть Dolphin. Якщо проблема не зникла, перевірте чи не блокує ваш Антивірус програму Dolphin. Якщо так, то відключіть тимчасово ваш Антивірус.'},
+  {'question': 'Злетів Fansmetric, потрібен ключ.',
+'answer': '320fe0b4-eeac-446b-8823-706391cf4839'},
     {'question': 'У мене інше питання', 'answer': 'Якщо ви не знайшли своєї проблеми у списку, зверніться до технічного менеджера і напишіть йому свою проблему.\n\n'
         "@CA_dima"}
 ]
@@ -46,13 +52,13 @@ def send_welcome(message):
     send_questions(message)
 
 # Функція для обробки команди /stop
-@bot.message_handler(commands=['stop'])
-def handle_stop(message):
-    response_text = "Дякую, що скористалися нашим ботом. Бажаю вам гарного дня! " \
-                    "Щоб задати питання, натисніть кнопку /questions."
-    bot.send_message(message.chat.id, response_text)
+# @bot.message_handler(commands=['stop'])
+# def handle_stop(message):
+  #  response_text = "Дякую, що скористалися нашим ботом. Бажаю вам гарного дня! " \
+   #                 "Щоб задати питання, натисніть кнопку /questions."
+   # bot.send_message(message.chat.id, response_text)
     # Припинення обміну повідомленнями
-    bot.stop_polling()
+    #bot.stop_polling()
 
 # Функція для обробки команди /questions
 @bot.message_handler(commands=['questions'])
@@ -127,5 +133,6 @@ def save_feedback(message):
 def handle_invalid(message):
     bot.send_message(message.chat.id, "Вибачте, я не розумію це запитання.")
 
+keep_alive()
 # Запуск бота
 bot.polling()
